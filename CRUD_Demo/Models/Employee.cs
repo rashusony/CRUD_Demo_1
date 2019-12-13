@@ -22,11 +22,14 @@ namespace CRUD_Demo.Models
         [Required]
         [DisplayName("Employee Code")]
         public string EmpCode { get; set; }
-        [RegularExpression(@"([a-zA-Z]+\s[a-zA-Z]*\s*)*")]
+       
         [DisplayName("Office Address")]
         public string OfficeLocation { get; set; }
         [Column(TypeName = "nvarchar(250)")]
         public string Position { get; set; }
+
+        [Required]
+        public string Gender { get; set; }
 
       
     }
