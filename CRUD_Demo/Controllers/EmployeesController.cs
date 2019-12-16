@@ -19,9 +19,22 @@ namespace CRUD_Demo.Controllers
         }
 
         // GET: Employees
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchName,string SearchPosition)
         {
-            return View(await _context.Employees.ToListAsync());
+            var Name = from s in _context.Employees
+                       select s;
+            if(!string.IsNullOrEmpty(SearchName)&&!string.IsNullOrEmpty(SearchPosition))
+            { 
+            Name = Name.Where(x => x.Name.Contains(SearchName) && x.Position.Contains(SearchPosition));
+
+            }
+            else if(!string.IsNullOrEmpty(SearchName) || !string.IsNullOrEmpty(SearchPosition))
+            {
+                Name = Name.Where(x => x.Name.Contains(SearchName) || x.Position.Contains(SearchPosition));
+
+            }
+
+            return View(await Name.ToListAsync());
         }
 
         // GET: Employees/Details/5

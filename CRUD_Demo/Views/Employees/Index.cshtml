@@ -3,56 +3,79 @@
 @{
     ViewData["Title"] = "Index";
 }
+    <head>
+        <script type="text/javascript">
+            function myFunction() {
+                document.getElementById("cont1").style.visibility = "visible";
+}
+        </script>
+    </head>
 
 <h4>Employee List</h4>
+<form asp-controller="Employees" asp-action="Index"  class="form-group">
+    <p>
+        Name:
+        <input type"text" name="SearchName" />
+        Position:
+        <input type"text" name="SearchPosition" />
+        <input id="one" type="submit" value="Search" onclick="myFunction()"/>
+       
+    </p>
+</form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmpCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OfficeLocation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Position)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                <a asp-action="AddOrEdit" class="btn btn-outline-success"><i class="fa fa-plus-square"></i>Employee</a>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmpCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfficeLocation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Position)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                <a asp-action="AddOrEdit" asp-route-id="@item.EmployeeId"><i class="fa fa-marker fa-lg"></i></a> |
-                <a asp-action="Delete" asp-route-id="@item.EmployeeId" class="text-danger"><i class="fa fa-trash-alt fa-lg"></i></a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div id="cont1" style="visibility: hidden">
+    <a asp-action="Index" class="btn btn-block"><i class="fa fa-table"></i>Back to List</a>
+</div>
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OfficeLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Position)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+                    <a asp-action="AddOrEdit" class="btn btn-outline-success"><i class="fa fa-plus-square"></i>Employee</a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OfficeLocation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        <a asp-action="AddOrEdit" asp-route-id="@item.EmployeeId"><i class="fa fa-marker fa-lg"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.EmployeeId" class="text-danger"><i class="fa fa-trash-alt fa-lg"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
