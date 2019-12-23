@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CRUD_Demo.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRUD_Demo.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
         private readonly EmployeeContext _context;
@@ -19,6 +21,7 @@ namespace CRUD_Demo.Controllers
         }
 
         // GET: Employees
+        
         public async Task<IActionResult> Index(string SearchName,string SearchPosition)
         {
             var Name = from s in _context.Employees
@@ -105,6 +108,11 @@ namespace CRUD_Demo.Controllers
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        [AllowAnonymous]
+        public IActionResult Information()
+        {
+            return  View("Info");
         }
 
         private bool EmployeeExists(int id)

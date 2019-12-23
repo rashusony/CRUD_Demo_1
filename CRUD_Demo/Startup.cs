@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 namespace CRUD_Demo
 {
     public class Startup
@@ -25,8 +27,19 @@ namespace CRUD_Demo
         {
             services.AddControllersWithViews();
 
+            //adding the entity framework core web.config changes
+
             services.AddDbContext<EmployeeContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+
+            //changing the defalut properties valuse for validation summery
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 2;
+            }
+
+            ).AddEntityFrameworkStores<EmployeeContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,13 +57,15 @@ namespace CRUD_Demo
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Employees}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }
